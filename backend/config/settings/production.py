@@ -147,3 +147,10 @@ LOGGING = {
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+WEBPACK_LOADER = {
+    "CAPFALC": {
+        "BUNDLE_DIR_NAME": str(FRONTEND_DIR / "build") + "/",  # noqa F405
+        "STATS_FILE": str(FRONTEND_DIR / "webpack-stats.prod.json"),  # noqa F405
+    },
+}

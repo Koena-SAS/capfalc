@@ -62,3 +62,10 @@ INSTALLED_APPS += ["django_extensions"]  # noqa F405
 
 # Your stuff...
 # ------------------------------------------------------------------------------
+
+WEBPACK_LOADER = {
+    "CAPFALC": {
+        "BUNDLE_DIR_NAME": str(FRONTEND_DIR / "build/"),  # noqa F405
+        "STATS_FILE": str(FRONTEND_DIR / "webpack-stats.dev.json"),  # noqa F405
+    }
+}
