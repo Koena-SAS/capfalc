@@ -11,15 +11,17 @@ variables:
 
 flake8:
   stage: lint
+  needs: []
   image: python:3.8-alpine
   before_script:
     - apk add --update gcc musl-dev
     - pip install -r backend/requirements/code_quality.txt
   script:
-    - flake8 backend --config=backend/setup.cfg --max-complexity 10
+    - flake8 backend --config=backend/setup.cfg --max-complexity=10
 
-test:
+test_backend:
   stage: test
+  needs: [flake8]
   image: python:3.8
   image: docker/compose:latest
   tags:
@@ -34,3 +36,30 @@ test:
   script:
     - docker-compose -f local.yml run -w /app/backend django mypy capfalc config --config=setup.cfg
     - docker-compose -f local.yml run django pytest backend/capfalc
+
+
+eslint:
+  stage: lint
+  needs: []
+  image: node:14.9-alpine
+  before_script:
+    - cd frontend
+    - yarn install
+  script:
+    - yarn lint
+
+test_frontend:
+  stage: test
+  needs: [eslint]
+  image: python:3.8
+  image: docker/compose:latest
+  tags:
+    - docker
+  services:
+    - docker:dind
+  before_script:
+    - docker-compose -f local.yml build
+    - docker-compose -f local.yml run --rm -w /app/frontend django yarn install
+    - docker-compose -f local.yml up -d
+  script:
+    - docker-compose -f local.yml run -w /app/frontend django yarn test --watchAll=false --ci

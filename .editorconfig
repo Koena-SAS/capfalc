@@ -24,6 +24,11 @@ include_trailing_comma = true
 force_grid_wrap = 0
 use_parentheses = true
 
+[*.js]
+indent_style = space
+indent_size = 2
+line_length = 80
+
 [*.{html,css,scss,json,yml}]
 indent_style = space
 indent_size = 2

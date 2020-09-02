@@ -1,2 +1,4 @@
 .envs/*
 !.envs/.local/
+.vscode
+.mypy_cache
