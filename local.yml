@@ -1,4 +1,4 @@
-version: '3'
+version: "3.8"
 
 volumes:
   local_postgres_data: {}
@@ -8,8 +8,11 @@ services:
   django:
     build:
       context: .
+      cache_from:
+        - capfalc_django:dev
+        - capfalc_django:latest
       dockerfile: ./compose/local/django/Dockerfile
-    image: capfalc_local_django
+    image: capfalc_django:dev
     container_name: django
     depends_on:
       - postgres
@@ -20,13 +23,14 @@ services:
       - ./.envs/.local/.postgres
     ports:
       - "8000:8000"
+      - "3000:3000"
     command: /start
 
   postgres:
     build:
       context: .
       dockerfile: ./compose/production/postgres/Dockerfile
-    image: capfalc_production_postgres
+    image: capfalc_postgres:latest
     container_name: postgres
     volumes:
       - local_postgres_data:/var/lib/postgresql/data
@@ -35,7 +39,7 @@ services:
       - ./.envs/.local/.postgres
 
   docs:
-    image: capfalc_local_docs
+    image: capfalc_docs:dev
     container_name: docs
     build:
       context: .
@@ -43,8 +47,8 @@ services:
     env_file:
       - ./.envs/.local/.django
     volumes:
-      - ./docs:/docs
-      - ./config:/app/config
-      - ./capfalc:/app/capfalc
+      - ./backend/docs:/docs
+      - ./backend/config:/app/config
+      - ./backend/capfalc:/app/capfalc
     ports:
       - "7000:7000"

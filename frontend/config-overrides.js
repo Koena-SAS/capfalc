@@ -22,7 +22,7 @@ module.exports = {
       );
       config.entry.push(require.resolve("webpack/hot/dev-server"));
     } else if (env === "production") {
-      config.output.publicPath = "/static/build/";
+      config.output.publicPath = "/static/capfalc_bundles/";
 
       config.plugins.push(
         new BundleTracker({
