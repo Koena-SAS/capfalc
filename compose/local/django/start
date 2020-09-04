@@ -5,5 +5,8 @@ set -o pipefail
 set -o nounset
 
 
+cd frontend
+pm2 start node_modules/react-app-rewired/scripts/start.js --name react-app
+cd ..
 python backend/manage.py migrate
 python backend/manage.py runserver_plus 0.0.0.0:8000

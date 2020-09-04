@@ -29,6 +29,11 @@ RUN apt-get update \
 COPY ./backend/requirements /requirements
 RUN pip install -r /requirements/local.txt
 
+RUN npm install pm2 -g
+COPY ./frontend/yarn.lock /yarn.lock
+COPY ./frontend/package.json /package.json
+RUN yarn install
+
 COPY ./compose/production/django/entrypoint /entrypoint
 RUN sed -i 's/\r$//g' /entrypoint
 RUN chmod +x /entrypoint

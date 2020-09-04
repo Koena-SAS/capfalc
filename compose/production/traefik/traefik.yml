@@ -24,7 +24,7 @@ http:
   routers:
     web-router:
       rule: "Host(`koena.net`) || Host(`www.koena.net`)"
-      
+
       entryPoints:
         - web
       middlewares:
@@ -34,7 +34,7 @@ http:
 
     web-secure-router:
       rule: "Host(`koena.net`) || Host(`www.koena.net`)"
-      
+
       entryPoints:
         - web-secure
       middlewares:
