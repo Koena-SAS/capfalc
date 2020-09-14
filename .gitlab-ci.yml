@@ -78,7 +78,8 @@ deploy:
     # Login into Docker registry:
     - docker login -u gitlab-ci-token -p "$CI_JOB_TOKEN" "$REGISTRY"
     # Pushing back the result
-    - docker tag capfalc_django:latest "${IMAGE_FULL_NAME}:latest"
-    - docker push "${IMAGE_FULL_NAME}:latest"
+    # Uncomment this to upload Docker image to Github registry
+    # - docker tag capfalc_django:latest "${IMAGE_FULL_NAME}:latest"
+    # - docker push "${IMAGE_FULL_NAME}:latest"
   only:
     - master
