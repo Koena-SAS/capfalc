@@ -1,12 +1,18 @@
 name: Backend tests
 
+# Enable Buildkit and let compose use it to speed up image building
+env:
+  DOCKER_BUILDKIT: 1
+  COMPOSE_DOCKER_CLI_BUILD: 1
+
 on: [push, pull_request]
 
 jobs:
   flake8:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout Code Repository
+        uses: actions/checkout@v2
       - name: Use Python 3.8
         uses: actions/setup-python@v2
         with:
