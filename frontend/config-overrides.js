@@ -14,6 +14,10 @@ module.exports = {
         })
       );
 
+      if(typeof config.entry === 'string') {
+        // since react-scripts 4, entry is no more an array by default
+        config.entry = [config.entry]
+      }
       config.entry = config.entry.filter(
         (x) => !x.includes("webpackHotDevClient")
       );
